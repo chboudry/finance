@@ -20,6 +20,12 @@ python3 ingestion/data_importer/transform_f1.py \
 	--out-dir datatransformed
 ```
 
+```
+python3 ingestion/data_importer/transform_f2.py \
+	--input dataset/LI-Small_Trans.csv \
+	--out-dir datatransformed
+```
+
 - Stop Neo4j (from your Neo4j installation folder):
 ```
 /Users/chboudry/Library/Application\ Support/neo4j-desktop/Application/Data/dbmss/dbms-0c6b0d93-0a1f-4abf-a62b-ca587e4dc1c3/bin/neo4J stop
@@ -33,8 +39,11 @@ python3 ingestion/data_importer/transform_f1.py \
 	--nodes=Bank=datatransformed/banks.csv \
 	--nodes=Entity=datatransformed/entities.csv \
 	--nodes=Account=datatransformed/accounts.csv \
+	--nodes=Transaction=datatransformed/transactions.csv \
 	--relationships=OWNS=datatransformed/entity_owns_account.csv \
-	--relationships=PART_OF=datatransformed/account_part_of_bank.csv
+	--relationships=PART_OF=datatransformed/account_part_of_bank.csv \
+	--relationships=FROM=datatransformed/transaction_from.csv \
+	--relationships=TO=datatransformed/transaction_to.csv
 ```
 
 - Start Neo4j:
