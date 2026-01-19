@@ -90,12 +90,3 @@ $NEO4J_HOME/bin/neo4j-admin database import incremental finance \
 ```
 START DATABASE finance
 ```
-$NEO4J_HOME/bin/neo4j-admin database import incremental finance \
-	--force \
-	--stage=all \
-	--id-type=string \
-	--skip-duplicate-nodes=true \
-	--nodes=Account=datatransformed/incremental/accounts.csv \
-	--nodes=Transaction="datatransformed/incremental/[0-9]{4}_[0-9]{2}_[0-9]{2}_transactions.csv" \
-	--relationships=FROM="datatransformed/incremental/[0-9]{4}_[0-9]{2}_[0-9]{2}_transactions_from.csv" \
-	--relationships=TO="datatransformed/incremental/[0-9]{4}_[0-9]{2}_[0-9]{2}_transactions_to.csv" 
