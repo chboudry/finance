@@ -60,9 +60,9 @@ def transform(input_csv: Path, out_dir: Path) -> None:
     account_part_of_bank_path = out_dir / "account_part_of_bank.csv"
     entity_owns_account_path = out_dir / "entity_owns_account.csv"
 
-    bank_fieldnames = ["bank_id:ID(Bank)", "bank_name"]
-    entity_fieldnames = ["entity_id:ID(Entity)", "entity_name"]
-    account_fieldnames = ["account_number:ID(Account)"]
+    bank_fieldnames = ["bank_id:ID(Bank){label:Bank}", "bank_name"]
+    entity_fieldnames = ["entity_id:ID(Entity){label:Entity}", "entity_name"]
+    account_fieldnames = ["account_number:ID(Account){label:Account}"]
 
     entity_account_rel_fieldnames = [":START_ID(Entity)", ":END_ID(Account)"]
     account_bank_rel_fieldnames = [":START_ID(Account)", ":END_ID(Bank)"]
@@ -102,14 +102,14 @@ def transform(input_csv: Path, out_dir: Path) -> None:
                 if bank_id not in seen_bank_ids:
                     seen_bank_ids.add(bank_id)
                     bank_writer.writerow(
-                        {"bank_id:ID(Bank)": bank_id, "bank_name": bank_name}
+                        {"bank_id:ID(Bank){label:Bank}": bank_id, "bank_name": bank_name}
                     )
 
                 if entity_id not in seen_entity_ids:
                     seen_entity_ids.add(entity_id)
                     entity_writer.writerow(
                         {
-                            "entity_id:ID(Entity)": entity_id,
+                            "entity_id:ID(Entity){label:Entity}": entity_id,
                             "entity_name": entity_name,
                         }
                     )
@@ -117,7 +117,7 @@ def transform(input_csv: Path, out_dir: Path) -> None:
                 if account_number not in seen_account_numbers:
                     seen_account_numbers.add(account_number)
                     account_writer.writerow(
-                        {"account_number:ID(Account)": account_number}
+                        {"account_number:ID(Account){label:Account}": account_number}
                     )
 
                 entity_account_writer.writerow(

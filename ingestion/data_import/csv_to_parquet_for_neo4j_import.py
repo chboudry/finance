@@ -3,7 +3,7 @@
 
 Neo4j (your version) supports `neo4j-admin database import full --input-type=parquet`.
 This script converts one or many CSV files to Parquet while preserving the exact
-column names that neo4j-admin relies on (e.g. 'bank_id:ID(Bank)', ':START_ID(Account)',
+column names that neo4j-admin relies on (e.g. 'bank_id:ID(Bank){label:Bank}', ':START_ID(Account)',
 'amount_paid:float', 'timestamp_date:datetime').
 
 Why:

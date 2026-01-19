@@ -143,7 +143,7 @@ def _parse_bool(value: str) -> bool:
 def transform(input_csv: Path, out_dir: Path, split_by_date: bool) -> None:
 
 	transaction_fieldnames = [
-		"transaction_id:ID(Transaction)",
+		"transaction_id:ID(Transaction){label:Transaction}",
 		"timestamp",
 		"timestamp_date:datetime",
 		"from_bank:int",
@@ -217,7 +217,7 @@ def transform(input_csv: Path, out_dir: Path, split_by_date: bool) -> None:
 
 				tx_writers[day_key].writerow(
 					{
-						"transaction_id:ID(Transaction)": tx_id_str,
+						"transaction_id:ID(Transaction){label:Transaction}": tx_id_str,
 						"timestamp": timestamp,
 						"timestamp_date:datetime": _parse_timestamp_date(timestamp),
 						"from_bank:int": from_bank,
