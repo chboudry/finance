@@ -1,0 +1,1 @@
+transaction_id:ID(Transaction){label:Transaction},timestamp,timestamp_date:datetime,from_bank:int,from_account,to_bank:int,to_aAccount,amount_received:float,receiving_currency,amount_paid:float,payment_currency,payment_format,is_laundering:boolean

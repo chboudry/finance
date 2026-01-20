@@ -39,7 +39,6 @@ def _open_csv_writer(path: Path, fieldnames: list[str]) -> tuple[csv.DictWriter,
     path.parent.mkdir(parents=True, exist_ok=True)
     f = path.open("w", newline="", encoding="utf-8")
     writer = csv.DictWriter(f, fieldnames=fieldnames)
-    writer.writeheader()
     return writer, f
 
 

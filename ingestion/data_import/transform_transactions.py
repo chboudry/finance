@@ -59,7 +59,6 @@ def _open_csv_writer(path: Path, fieldnames: list[str]) -> tuple[csv.DictWriter,
 	path.parent.mkdir(parents=True, exist_ok=True)
 	f = path.open("w", newline="", encoding="utf-8")
 	writer = csv.DictWriter(f, fieldnames=fieldnames)
-	writer.writeheader()
 	return writer, f
 
 
@@ -175,7 +174,7 @@ def transform(input_csv: Path, out_dir: Path, split_by_date: bool) -> None:
 		from_writer, from_f = _open_csv_writer(
 			out_dir / "transactions_from.csv", from_rel_fieldnames
 		)
-		to_writer, to_f = _open_csv_writer(out_dir / "transaction_to.csv", to_rel_fieldnames)
+		to_writer, to_f = _open_csv_writer(out_dir / "transactions_to.csv", to_rel_fieldnames)
 
 		tx_writers["all"] = tx_writer
 		tx_files["all"] = tx_f
