@@ -5,7 +5,8 @@ What we want to achieve here :
 - Execute a full
 - Execute an incremental
 
-## Things you might need 
+
+### Things you might need 
 
 Set up path where your binaries are located (in my case the Home path refers to a classical Neo4j Desktop 2.0 path)
 
@@ -14,14 +15,15 @@ export NEO4J_HOME="/Users/chboudry/Library/Application Support/neo4j-desktop/App
 export JAVA_HOME=$(/usr/libexec/java_home -v 21)
 ```
 
-## Prepare files
+### Prepare files
 
 We need to transform the data for them to match the nodes and relationships formats it's going to have later on in the database.
 
 ```
 python3 ingestion/data_import/transform_accounts.py \
 	--input dataset/LI-Small_accounts.csv \
-	--out-dir datatransformed
+	--out-dir datatransformed \
+	--output-format csv
 ```
 
 ```
@@ -33,7 +35,7 @@ python3 ingestion/data_import/transform_transactions.py \
 
 Move the 3 DATE_Transactions+to+from.csv you want to use in a subfolder called "incremental"
 
-## Run a Full 
+### Run a Full 
 
 1. Stop Neo4j (from your Neo4j installation folder) or the database :
 ```
@@ -65,6 +67,7 @@ $NEO4J_HOME/bin/neo4j-admin database import full finance \
 - overwrite-destination will drop previous database
 - id-type is going to be string for all files but it could get overriden within each headers
 - schema is used to create constraints and index, it is not mandatory to have it for full but it will be mandatory to have them for the incremental to work
+- label could be a column within the csv, but we are optimizing a bit of disk space by specyfing it per nodes=LABEL instructions
 - it a a best practice to have headers in distinct files, it avoids opening potentially very large file just to get headers
 
 3. Start Neo4j or the database:
@@ -78,7 +81,7 @@ or
 START DATABASE finance
 ```
 
-## Run an incremental
+### Run an incremental
 
 Stopping the database during the incremental is unavoidable, but downtime can be reduced by a 3 staged process that is not showcased here.
 
@@ -108,3 +111,9 @@ $NEO4J_HOME/bin/neo4j-admin database import incremental finance \
 ```
 START DATABASE finance
 ```
+
+### Parquet
+
+This is actually a use case you won't be able to achieve in Parquet.
+Parquet does not yet support id space syntax, meaning all ids will be part of the same ingestion id group : if you have ids between labels that are identical, it will fail.
+This is the case of this example, we do have banks id numbers that exists as well within transaction ids.

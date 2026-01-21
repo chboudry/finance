@@ -1,3 +1,5 @@
 dataset/*
 datatransformed/*
 .DS_Store
+venv
+import.report
